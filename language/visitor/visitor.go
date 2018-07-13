@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/graphql-go/graphql/language/ast"
-	"github.com/graphql-go/graphql/language/typeInfo"
+	"github.com/saturn4er/graphql/language/ast"
+	"github.com/saturn4er/graphql/language/typeInfo"
 )
 
 const (

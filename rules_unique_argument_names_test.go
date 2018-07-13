@@ -3,9 +3,9 @@ package graphql_test
 import (
 	"testing"
 
-	"github.com/graphql-go/graphql"
-	"github.com/graphql-go/graphql/gqlerrors"
-	"github.com/graphql-go/graphql/testutil"
+	"github.com/saturn4er/graphql"
+	"github.com/saturn4er/graphql/gqlerrors"
+	"github.com/saturn4er/graphql/testutil"
 )
 
 func TestValidate_UniqueArgumentNames_NoArgumentsOnField(t *testing.T) {
