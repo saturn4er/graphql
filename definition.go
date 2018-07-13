@@ -7,6 +7,7 @@ import (
 	"regexp"
 
 	"github.com/saturn4er/graphql/language/ast"
+	"github.com/saturn4er/graphql/gqlerrors"
 )
 
 // Type interface for all of the possible kinds of GraphQL types
@@ -1104,26 +1105,22 @@ func NewInputObject(config InputObjectConfig) *InputObject {
 	//gt.fields = gt.defineFieldMap()
 	return gt
 }
-
 func (gt *InputObject) defineFieldMap() InputObjectFieldMap {
 	var (
 		fieldMap InputObjectConfigFieldMap
 		err      error
 	)
+	resultFieldMap := InputObjectFieldMap{}
 	switch gt.typeConfig.Fields.(type) {
 	case InputObjectConfigFieldMap:
 		fieldMap = gt.typeConfig.Fields.(InputObjectConfigFieldMap)
 	case InputObjectConfigFieldMapThunk:
 		fieldMap = gt.typeConfig.Fields.(InputObjectConfigFieldMapThunk)()
-	}
-	resultFieldMap := InputObjectFieldMap{}
-
-	if gt.err = invariantf(
-		len(fieldMap) > 0,
-		`%v fields must be an object with field names as keys or a function which return such an object.`, gt,
-	); gt.err != nil {
+	default:
+		gt.err = gqlerrors.NewFormattedError("InputObjectConfig.Fields should be of type InputObjectConfigFieldMap or InputObjectConfigFieldMapThunk")
 		return resultFieldMap
 	}
+
 
 	for fieldName, fieldConfig := range fieldMap {
 		if fieldConfig == nil {
